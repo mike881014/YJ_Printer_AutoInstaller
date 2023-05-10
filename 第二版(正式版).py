@@ -6,19 +6,21 @@ import time
 import zipfile
 import shutil
 import subprocess
+import getpass
 
 root = tk.Tk()
+user_name = getpass.getuser()
 
 def unzip():
     zip_file = zipfile.ZipFile(r'AutoInstall\AutoInstall.zip')  # 檔案的路徑與檔案名
     zip_list = zip_file.namelist()  # 得到壓縮包里所有檔案
     for f in zip_list:
-        zip_file.extract(f, r'C:\Users\User\Documents', pwd="123456".encode("utf-8"))  # 回圈解壓檔案到指定目錄
+        zip_file.extract(f, f'C:\\Users\\{user_name}\\Documents', pwd="123456".encode("utf-8"))  # 回圈解壓檔案到指定目錄
     zip_file.close()  # 關閉檔案，必須有，釋放記憶體
 
 def delete():
-    os.remove(r"C:\Users\User\Documents\Canon5170.bat")
-    shutil.rmtree(r"C:\Users\User\Documents\Driver")
+    os.remove(f"C:\\Users\\{user_name}\\Documents\\Canon5170.bat")
+    shutil.rmtree(f"C:\\Users\\{user_name}\\Documents\\Driver")
 
 def set_face():
     time_set = [45,56,61,70]
@@ -47,7 +49,7 @@ def set_face():
         bar['value'] = i            # 每次迴圈執行時改變進度條進度
         val.set(f'{i}%')            # 每次迴圈執行時改變顯示文字
         window.update()               # 更新視窗內容 ( 很重要！ )
-        time.sleep(0.01)
+        time.sleep(0.001)
 
     unzip()
 
@@ -57,13 +59,13 @@ def set_face():
         window.update()               # 更新視窗內容 ( 很重要！ )
         time.sleep(0.01)
 
-    subprocess.run(r"C:\Users\User\Documents\Canon5170.bat", shell=True)
+    subprocess.run(f"C:\\Users\\{user_name}\\Documents\\Canon5170.bat", shell=True)
 
     for i in range(20):
         bar['value'] = bar['value'] + i            # 每次迴圈執行時改變進度條進度
         val.set(f'{i}%')            # 每次迴圈執行時改變顯示文字
         window.update()               # 更新視窗內容 ( 很重要！ )
-        time.sleep(0.1)
+        time.sleep(0.01)
 
     delete()
 
