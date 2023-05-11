@@ -11,6 +11,10 @@ import getpass
 root = tk.Tk()
 user_name = getpass.getuser()
 
+def getTextInput(textbox):
+    result=textbox.get("1.0","end")
+    print(result)
+
 def unzip():
     zip_file = zipfile.ZipFile(r'AutoInstall\AutoInstall.zip')  # 檔案的路徑與檔案名
     zip_list = zip_file.namelist()  # 得到壓縮包里所有檔案
@@ -21,6 +25,33 @@ def unzip():
 def delete():
     os.remove(f"C:\\Users\\{user_name}\\Documents\\Canon5170.bat")
     shutil.rmtree(f"C:\\Users\\{user_name}\\Documents\\Driver")
+
+def ip_face():
+    width = 500
+    height = 200
+
+    window = tk.Tk()
+
+    window.geometry(f"{width}x{height}+{int((window.winfo_screenwidth() - width) / 2)}+{int((window.winfo_screenheight() - height) / 2)}")
+    window.title("永捷系統科技 - 印表機驅動程式安裝")
+    window.iconbitmap("Autoinstall\\a1vuc-fgxyp-001.ico")
+    window.resizable(False, False)
+
+    ip = tk.Label(window, text='請輸入IP : ', font=('Helvetica', '20'))
+    ip.place(x=20, y=60)
+
+    text = tk.Text(window, height=1, width=25, font=('Helvetica', '14'))
+    text.place(x=170, y=67)
+
+    set_but = tk.Button(window, text='確定', width=15, font=('Helvetica', '18'), command=lambda:getTextInput(text))
+    set_but.place(x=135, y=115)
+
+    mylabel = tk.Label(window, text='Copyright © 永捷系統科技公司 版權所有', fg="gray")
+    mylabel.place(x=135, y=175)
+
+    window.focus_force()
+
+    window.mainloop()
 
 def set_face():
     time_set = [45,56,61,70]
@@ -72,7 +103,7 @@ def set_face():
     bar['value'] = 100
 
     exit_but = tk.Button(window, text='完成', width=15, font=('Helvetica', '20'), command=window.destroy)
-    exit_but.place(x=125, y=75)
+    exit_but.place(x=135, y=75)
     window.update()
 
     window.focus_force()
@@ -92,11 +123,17 @@ ad = tk.Canvas(root, width=350, height=198)
 ad.create_image(0, 0, anchor='nw', image=ad_img)   # 在 Canvas 中放入圖片
 ad.place(x=75, y=50)
 
-set_but = tk.Button(root, text='開始設定', width=15, font=('Helvetica', '20'), command=set_face)
-set_but.place(x=125, y=260)
+set_but = tk.Button(root, text='開始設定', width=15, font=('Helvetica', '18'), command=set_face)
+set_but.place(x=135, y=260)
+
+ip_but = tk.Button(root, text='工程師設定', width=15, font=('Helvetica', '18'), command=ip_face)
+ip_but.place(x=135, y=320)
 
 mylabel = tk.Label(root, text='Copyright © 永捷系統科技公司 版權所有', fg="gray")
 mylabel.place(x=135, y=375)
 
 root.geometry(f"{width}x{height}+{int((root.winfo_screenwidth()-width)/2)}+{int((root.winfo_screenheight()-height)/2)}")
+
+root.focus_force()
+
 root.mainloop()
